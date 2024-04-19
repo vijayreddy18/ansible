@@ -1,0 +1,12 @@
+---
+- name: installing packages
+  hosts: all
+  become: true
+  gather_facts: no
+
+
+  tasks: 
+   - name: uninstalling git
+     yum:
+       name: ['wget', 'tree', 'telnet',]
+       state: removed

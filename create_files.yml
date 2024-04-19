@@ -1,0 +1,13 @@
+---
+ - name: creating directory
+   hosts: all
+   become: true
+   
+   tasks:
+   - name: creating file
+     file:
+      path: /home/dippa
+      state: touch
+      mode: 0777
+      ownner: ansadmin
+

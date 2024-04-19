@@ -1,0 +1,19 @@
+---
+- name: installing packages
+  hosts: all
+  become: true
+  gather_facts: no
+
+
+  tasks: 
+   - name: installing git
+     yum:
+       name: '{{ item }}'
+       state: present
+     with_items:
+        - git
+        - wget
+        - tree
+        - telnet
+        - gzip
+

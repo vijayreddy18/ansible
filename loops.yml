@@ -1,0 +1,19 @@
+---
+ - name: using loops
+   hosts: all
+   become: true
+   gather_facts: no
+
+   tasks:
+    - name: installing & uninstalling pkgs by loops
+      yum:
+        name: '{{ item.pkg }}'
+        state: '{{ item.set }}'
+
+      loop:
+       - { pkg: 'git*',  set: 'absent'}
+       - { pkg: 'wget', set: 'removed'}
+       - { pkg: 'tree', set: 'absent'}
+       - { pkg: 'make', set: 'absent'}
+
+

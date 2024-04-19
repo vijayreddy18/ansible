@@ -1,0 +1,23 @@
+---
+ - name: installing packge
+   hosts: all
+   become: true
+   gather_facts: no
+   
+   tasks:
+    - name: installing pache
+      yum:
+       name: httpd
+       state: installed
+    
+
+    - name: starting apache
+      service:
+        name: httpd
+        state: started
+
+    - name: copying file
+      copy:
+       src: /home/ansadmin/playbook/index.html
+       dest: /var/www/html
+

@@ -1,0 +1,11 @@
+---
+- name: removing httpd
+  hosts: all
+  become: true
+
+  tasks:
+   - name: uninstalling httpd  
+     yum:
+      name: httpd
+      state: absent
+      

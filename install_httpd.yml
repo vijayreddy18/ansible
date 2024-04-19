@@ -1,0 +1,36 @@
+---
+- name: installing package
+  hosts: all
+  become: true
+  gather_facts: yes
+
+  tasks:
+    - name: installing apache on RedHat
+      yum:
+        name: httpd
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: starting apache on RedHat
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+
+    - name: installing apache on Ubuntu
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: starting apache on Ubuntu
+      service:
+        name: apache2
+        state: started
+      when: ansible_os_family == "Debian"
+
+    - name: copying file
+      copy:
+        src: /home/ansadmin/playbook/index.html
+        dest: /var/www/html
+
