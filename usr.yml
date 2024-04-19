@@ -1,0 +1,22 @@
+---
+- name: using variables
+  hosts: all
+  become: true
+  gather_facts: no
+  vars_files:
+     - /home/ansadmin/playbook/ansible/vsr.yml
+
+  tasks:
+   - name: creating users
+     user:
+      name: '{{user_name}}'
+
+
+   - name: creating directory
+     file:
+      path: /opt/{{user_name}}_temp
+      state: directory
+      owner: '{{user_name}}'
+      group: '{{user_name}}'
+      mode: 0755
+
