@@ -1,0 +1,7 @@
+---
+- name: install tomcat
+  hosts: webservers
+  become: true
+
+  roles:
+    - tomcat_setup
