@@ -28,8 +28,18 @@
         mode: 0755
         recurse: yes
 
+
+    - name: creating links for tomcat startup
+      file:
+        src: /opt/{{ tomcat_pkg }}/bin/{{ item.tomcat_spt }}
+        dest: /usr/local/bin/{{ item.cat_cmd }}
+        state: link
+
+      loop: 
+        - { tomcat_spt: startup.sh,  cat_cmd: tomcatup }
+        - { tomcat_spt: shutdown.sh, cat_cmd: tomcatdown }
+        
     - name: start Tomcat using startup script
       command: nohup ./startup.sh
       args:
         chdir: /opt/{{tomcat_pkg}}/bin
-
