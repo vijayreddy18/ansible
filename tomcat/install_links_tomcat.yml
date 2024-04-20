@@ -1,0 +1,45 @@
+---
+- name: install tomcat
+  hosts: webservers
+  become: true
+  vars_files:
+    - tom.yml
+  tasks:
+    - name: install java 8
+      yum:
+        name: java-1.8.0-openjdk  # Adjust package name for Java 8
+        state: installed
+
+    - name: Downloading tomcat
+      get_url:
+        url: '{{tomcat_url}}'
+        dest: /opt
+        mode: 0755
+
+    - name: extracting packages
+      unarchive:
+        src: /opt/{{tomcat_pkg}}.tar.gz
+        dest: /opt
+        remote_src: yes
+
+    - name: changing permission
+      file:
+        path: /opt/{{tomcat_pkg}}
+        mode: 0755
+        recurse: yes
+
+
+    - name: creating links for tomcat startup
+      file:
+        src: /opt/{{ tomcat_pkg }}/bin/{{ item.tomcat_spt }}
+        dest: /usr/local/bin/{{ item.cat_cmd }}
+        state: link
+
+      loop: 
+        - { tomcat_spt: startup.sh,  cat_cmd: tomcatup }
+        - { tomcat_spt: shutdown.sh, cat_cmd: tomcatdown }
+        
+    - name: start Tomcat using startup script
+      command: nohup ./startup.sh
+      args:
+        chdir: /opt/{{tomcat_pkg}}/bin
