@@ -5,7 +5,7 @@
    gather_facts: no
    
    tasks:
-    - name: installing pache
+    - name: installing apache
       yum:
        name: httpd
        state: installed
