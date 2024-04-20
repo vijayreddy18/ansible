@@ -1,0 +1,15 @@
+---
+- name: Clone private repository
+  hosts: all
+  become: true
+  vars_files:
+     - vault.yml
+
+
+  tasks:
+    - name: Clone repository
+      git:
+        repo: https://vijayreddy18:{{ git_password }}@github.com/vijayreddy18/ansible_vault.git
+        dest: /home/ansadmin/dj
+        accept_hostkey: yes
+      
