@@ -5,10 +5,11 @@
 
 
   tasks:
-   - name: install wget
-     yum:
-      name: wget
-      state: present
+
+  - name: install java
+    yum:
+     name: ['java-1.8.0-openjdk', 'wget']
+     state: installed
 
    - name: downloading repo
      get_url:
