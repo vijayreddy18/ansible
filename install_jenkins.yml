@@ -1,0 +1,38 @@
+---
+- name: install jenkins using ansible playbook
+  hosts: webservers
+  become: true
+
+
+  tasks:
+   - name: install wget
+     yum:
+      name: wget
+      state: present
+
+   - name: downloading repo
+     get_url:
+         url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+         dest: /etc/yum.repos.d/jenkins.repo 
+
+
+   - name: install epel
+     ansible.builtin.rpm_key:
+        state: present
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+   - name: install jenkins
+     yum : 
+      name: jenkins
+      state: present
+
+
+   - name: start jenkins
+     service: 
+       name: jenkins
+       state: started
+       enabled: yes
+       
+
+
+
